@@ -26,7 +26,7 @@ class Weapon {
       return this.attack;
     }
 
-    return (this.attack /= 2);
+    return this.attack / 2;
   }
 
   isBroken() {
@@ -144,7 +144,7 @@ console.log("сломано", sword.isBroken());
 
 //////////////////////////////////////////////
 
-class Studentlog {
+class StudentLog {
   constructor(name) {
     (this.name = name), (this.data = {});
   }
@@ -216,7 +216,7 @@ class Studentlog {
   }
 }
 
-const log = new Studentlog("Олег Никифоров");
+const log = new StudentLog("Олег Никифоров");
 console.log(log.getName());
 
 console.log(log.getData());
