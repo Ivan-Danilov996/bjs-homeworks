@@ -1,86 +1,70 @@
-'use strict'
-
+"use strict";
 
 function parseCount(value) {
+  const result = Number.parseInt(value);
 
-    value = Number.parseInt(value);
+  if (isNaN(result)) {
+    const error = new Error("Невалидное значение");
+    throw error;
+  }
 
-    if (isNaN(value)) {
-        const parseError = new Error("Невалидное значение");
-        throw parseError;
-    }
-
-    return value
-
+  return result;
 }
 
-
 function validateCount(value) {
-
-    try {
-        if(isNaN(parseCount(value))) {
-            const validateError = new Error("Невалидное значение");
-            throw validateError;
-        }
-        return parseCount(value)
-
-    } catch(e) {
-        return ("Невалидное значение");
-    }
+  try {
+    const result = parseCount(value);
+    return result;
+  } catch (e) {
+    return e;
+  }
 }
 
 //2
 
-
-
-
 class Triangle {
-    
-    constructor(a, b, c) {
-        this.a = a,
-        this.b = b,
-        this.c = c
+  constructor(a, b, c) {
+    (this.a = a), (this.b = b), (this.c = c);
 
-        
-
+    if (
+      this.a + this.b < this.c ||
+      this.b + this.c < this.a ||
+      this.a + this.c < this.b
+    ) {
+      const triangleError = new Error(
+        "Треугольник с такими сторонами не существует"
+      );
+      throw triangleError;
     }
+  }
 
-    getPerimeter() {
-        try {
-            if (this.a + this.b < this.c || this.b + this.c < this.a || this.a + this.c < this.b) {
-                const triangleError = new Error("Треугольник с такими сторонами не существует");
-                throw triangleError;
-            }
-            this.P = this.a + this.b + this.c
-            return this.P
-        }
-        catch(e) {
-            return ("Ошибка! Неправильный треугольник")
-        }
-        
-    }
+  getPerimeter() {
+    return this.a + this.b + this.c;
+  }
 
-    getArea() {
-        try {
-            if (this.a + this.b < this.c || this.b + this.c < this.a || this.a + this.c < this.b) {
-                const triangleError = new Error("Треугольник с такими сторонами не существует");
-                throw triangleError;
-            }
-            const p = (this.a + this.b + this.c) / 2
-            return Math.sqrt(p * (p - this.a) * (p - this.b) * (p - this.c)).toFixed(3)
-        }
-        catch(e) {
-            return ("Ошибка! Неправильный треугольник")
-        }
-        
-    }
-    
+  getArea() {
+    const p = this.getPerimeter() / 2;
+    return +Math.sqrt(p * (p - this.a) * (p - this.b) * (p - this.c)).toFixed(
+      3
+    );
+  }
 }
 
 function getTriangle(a, b, c) {
+  try {
+    const triangle = new Triangle(a, b, c);
+    return triangle;
+  } catch {
+    const triangle = {
+      getPerimeter() {
+        return "Ошибка! Неправильный треугольник";
+      },
 
-    const triangle = new Triangle(a, b, c)
+      getArea() {
+        return "Ошибка! Неправильный треугольник";
+      },
+    };
 
-    return triangle
-
+    return triangle;
+  }
 }
