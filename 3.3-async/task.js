@@ -4,22 +4,19 @@ class AlarmClock {
         this.timerId = null
     }
     addClock(time, callback , id) {
-        try{
             if(!id) {
                 throw new Error('Невозможно идентифицировать будильник. Параметр id не найден')
             }
             if(this.alarmCollection.some(element => element.id === id)) {
-                throw new Error('Будильник с тким id уже существует')
+                console.error('Будильник с тким id уже существует')
+            } else {
+                this.alarmCollection.push({
+                    time,
+                    callback, 
+                    id
+                })
             }
-            this.alarmCollection.push({
-                time,
-                callback, 
-                id
-            })
-        }
-        catch(e) {
-            console.log(e)
-        }
+            
     }
     removeClock(id) {
         const index = this.alarmCollection.findIndex(element => element.id === id)
